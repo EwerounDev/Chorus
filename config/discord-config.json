@@ -1,0 +1,14 @@
+{
+  "clientId": "DISCORD_CLIENT_ID",
+  "applicationName": "DISCORD_APPLICATION_NAME",
+  "largeImageKey": "chorus_logo",
+  "largeImageText": "DISCORD_APPLICATION_NAME",
+  "smallImageKey": "music_icon",
+  "smallImageText": "Listening to music",
+  "buttons": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/your-username/chorus-player"
+    }
+  ]
+} 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Определение градиентов -->
+    <defs>
+        <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="figureGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+            <stop offset="100%" style="stop-color:#f3f4f6;stop-opacity:0.95" />
+        </linearGradient>
+    </defs>
+
+    <!-- Фон с градиентом -->
+    <circle cx="50" cy="50" r="48" fill="url(#backgroundGradient)"/>
+
+    <!-- Силуэт пользователя -->
+    <g transform="translate(0,2)">
+        <!-- Голова -->
+        <circle cx="50" cy="36" r="18" fill="url(#figureGradient)"/>
+        
+        <!-- Тело -->
+        <path d="
+            M 28 72
+            C 28 52 40 42 50 42
+            C 60 42 72 52 72 72
+            C 72 82 62 86 50 86
+            C 38 86 28 82 28 72
+            Z" 
+            fill="url(#figureGradient)"/>
+    </g>
+</svg> 

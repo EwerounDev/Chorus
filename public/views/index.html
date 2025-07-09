@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#121212">
+    <title>Chorus</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="manifest" href="/config/manifest.json">
+    <link rel="apple-touch-icon" href="/public/assets/logo.png">
+</head>
+<body>
+    
+    <div class="custom-titlebar">
+        <div class="titlebar-title">Chorus</div>
+        <div class="titlebar-controls">
+            <button class="titlebar-btn minimize" title="Minimize">&#x2013;</button>
+            <button class="titlebar-btn maximize" title="Maximize">&#x25A1;</button>
+            <button class="titlebar-btn close" title="Close">&#x2715;</button>
+        </div>
+    </div>
+    <div class="app-container">
+        <div class="desktop-sidebar">
+            <div class="sidebar-section" id="playlist-sidebar-section">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-list-music"></i> My Playlists</h3>
+                    <button id="add-playlist-btn" class="action-button" title="Create playlist"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="sidebar-search-container">
+                    <input type="text" id="sidebar-search" placeholder="Find playlist...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <ul class="sidebar-list" id="sidebar-playlist-list">
+                </ul>
+            </div>
+            <div class="sidebar-section" id="recent-activity-section">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-history"></i> Recently Played</h3>
+                </div>
+                <ul class="sidebar-list" id="sidebar-recent-list">
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mobile-sidebar">
+            <div class="logo">
+                <img src="/public/assets/logo.png" alt="Logo">
+                <h1>Chorus</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="active"><i class="fas fa-home"></i>Home</li>
+                    <li><i class="fas fa-search"></i>Search</li>
+                    <li><i class="fas fa-list"></i>Playlists</li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="sidebar-overlay"></div>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="logo-desktop">
+                        <img src="/public/assets/logo.png" alt="Logo">
+                        <h1>Chorus</h1>
+                    </div>
+                    
+                    <nav class="desktop-nav">
+                        <ul>
+                            <li class="nav-item active" data-section="home">
+                                <i class="fas fa-home"></i>
+                                <span>Home</span>
+                            </li>
+                            <li class="nav-item" data-section="search">
+                                <i class="fas fa-search"></i>
+                                <span>Search</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <div class="top-bar-center">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search music...">
+                    </div>
+                </div>
+
+                <div class="top-bar-right">
+                    <div class="user-controls">
+                        <div class="user-menu hidden" id="userMenu">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Avatar" class="avatar">
+                            <span class="username" id="usernamePlaceholder"></span>
+                            <button id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                        <button class="auth-btn" id="showLogin">Login</button>
+                        <button class="auth-btn" id="showRegister">Register</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div id="searchResults" class="search-results"></div>
+                <div id="playlistView" class="playlist-view hidden">
+                    <h2 id="playlistTitle"></h2>
+                    <p id="playlistStats"></p>
+                    <div id="playlistTracks"></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="player-bar">
+            <div class="now-playing">
+                <img id="currentCover" src="/public/assets/default-avatar.svg" alt="Cover">
+                <div class="track-info">
+                    <div id="currentTitle" class="track-title">Track Title</div>
+                    <div id="currentArtist" class="track-artist">Artist</div>
+                </div>
+                
+            </div>
+
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="control-btn" id="shuffleBtn">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button class="control-btn" id="prevBtn">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="play-btn" id="playBtn">
+                        <i class="fas fa-play-circle"></i>
+                    </button>
+                    <button class="control-btn" id="nextBtn">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button class="control-btn" id="repeatBtn">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+                <div class="progress-container">
+                    <span class="time" id="currentTime">0:00</span>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <span class="time" id="totalTime">0:00</span>
+                </div>
+            </div>
+
+            <div class="volume-controls">
+                <button class="volume-btn" id="muteBtn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <div class="volume-slider">
+                    <div class="volume-progress"></div>
+                </div>
+            </div>
+        </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <button class="close">&times;</button>
+            </div>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register</h2>
+                <button class="close">&times;</button>
+            </div>
+            <form id="registerForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="createPlaylistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Playlist</h2>
+                <button class="close">&times;</button>
+            </div>
+            <form id="createPlaylistForm">
+                <input type="text" id="playlistName" placeholder="Playlist name" required>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addToPlaylistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add to Playlist</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="selected-track">
+                <img src="/public/assets/default-avatar.svg" alt="Track">
+                <div class="track-details">
+                    <h4>Track Title</h4>
+                    <p>Artist</p>
+                </div>
+
+            </div>
+            <div class="playlist-selection-list"></div>
+        </div>
+    </div>
+
+    <div class="fullscreen-cover" id="fullscreenCover">
+        <div class="fullscreen-cover-background" id="fullscreenBackground"></div>
+        <div class="fullscreen-cover-overlay"></div>
+        <button class="close-fullscreen" id="closeFullscreen">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="fullscreen-image-container">
+            <img src="/public/assets/default-avatar.svg" alt="Album Cover" class="fullscreen-cover-image" id="fullscreenImage">
+            <div class="fullscreen-track-info">
+                <h2 id="fullscreenTitle">Track Title</h2>
+                <p id="fullscreenArtist">Artist</p>
+            </div>
+            <div class="fullscreen-controls">
+                <button class="fullscreen-control-btn" id="fullscreenPrevBtn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="fullscreen-control-btn" id="fullscreenNextBtn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorDisplay" class="error-display" style="display: none;"></div>
+    <div id="notificationContainer"></div>
+    <script src="/public/js/script.js"></script>
+</body>
+</html>

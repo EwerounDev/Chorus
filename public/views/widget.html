@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Widget</title>
+    <link rel="stylesheet" href="/public/css/widget-styles.css">
+</head>
+<body>
+    <div class="widget-container">
+        <div class="widget-header">
+            <div class="widget-title">Music</div>
+            <div class="widget-controls">
+                <button class="control-btn minimize-btn" title="Minimize">─</button>
+                <button class="control-btn close-btn" title="Close">×</button>
+            </div>
+        </div>
+        
+        <div class="widget-content">
+            <div class="track-cover-container">
+                <img id="trackCover" class="track-cover" src="/public/assets/default-avatar.svg" alt="Track cover">
+                <div class="play-overlay" id="playOverlay">
+                    <div class="play-icon">▶</div>
+                </div>
+            </div>
+            
+            <div class="track-info">
+                <div class="track-title" id="trackTitle">No track</div>
+                <div class="track-artist" id="trackArtist">Unknown artist</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-info">
+                    <span class="current-time" id="currentTime">0:00</span>
+                    <span class="total-time" id="totalTime">0:00</span>
+                </div>
+            </div>
+            
+            <div class="widget-controls-main">
+                <button class="control-btn prev-btn" id="prevBtn" title="Previous">⏮</button>
+                <button class="control-btn play-btn" id="playBtn" title="Play/Pause">▶</button>
+                <button class="control-btn next-btn" id="nextBtn" title="Next">⏭</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/public/js/widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "chorus-desktop",
+  "version": "1.0.0",
+  "description": "Music streaming desktop application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --watch main.js --watch preload.js --exec electron .",
+    "build": "electron-builder build",
+    "server": "node server.js"
+  },
+  "build": {
+    "appId": "com.chorus.desktop",
+    "productName": "Chorus",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "logo.png"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "discord-rpc": "^4.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "NeteaseCloudMusicApi": "^4.27.0",
+    "ngrok": "^5.0.0-beta.2",
+    "uglify-js": "^3.17.4"
+  },
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12",
+    "nodemon": "^3.0.1"
+  }
+}
