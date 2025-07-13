@@ -1,4 +1,6 @@
 # Chorus Music Player - Desktop Version
+<img width="1191" height="794" alt="image" src="https://github.com/user-attachments/assets/9cd8141c-7207-4a4e-8a4e-80481df683fb" />
+<img width="1188" height="792" alt="image" src="https://github.com/user-attachments/assets/a79532c3-da4d-493d-ab44-9e5712e44e71" />
 
 Desktop version of Chorus music player with YouTube parser integration, Discord RPC, and control widget.
 
