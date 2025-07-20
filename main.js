@@ -20,7 +20,35 @@ app.commandLine.appendSwitch('enable-precise-memory-info');
 let mainWindow;
 let widgetWindow;
 let discordRPC;
+let staticServer = null;
 const sessionFile = path.join(app.getPath('userData'), 'session.json');
+
+async function startStaticServer() {
+  try {
+    const express = require('express');
+    const cors = require('cors');
+    const serverApp = express();
+    const PORT = process.env.MAIN_SERVER_PORT;
+
+    const authenticateRequest = (req, res, next) => {
+      const token = req.headers['x-auth-token'];
+      if (req.hostname === 'localhost' || req.hostname === '127.0.0.1') return next();
+      if (!token || token !== process.env.API_SECRET) return res.status(401).json({ error: 'Unauthorized' });
+      next();
+    };
+
+    serverApp.use(cors({ origin: ['http://localhost:*', 'http://127.0.0.1:*'], credentials: true }));
+    serverApp.use('/public', authenticateRequest, express.static(path.join(__dirname, 'public')));
+    serverApp.use('/config', authenticateRequest, express.static(path.join(__dirname, 'config')));
+    serverApp.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/views/index.html')));
+    serverApp.get('/widget', (req, res) => res.sendFile(path.join(__dirname, 'public/views/widget.html')));
+    staticServer = serverApp.listen(PORT);
+    process.env.MAIN_SERVER_URL = `http://localhost:${PORT}`;
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function encryptSession(data) {
   const algorithm = 'aes-256-cbc';
@@ -155,8 +183,8 @@ function createWindow() {
   mainWindow.webContents.setFrameRate(30);
   mainWindow.webContents.setBackgroundThrottling(true);
   mainWindow.on('minimize', () => mainWindow.webContents.session.clearCache());
-  mainWindow.loadURL(process.env.MAIN_SERVER_URL);
-  //mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(`${process.env.MAIN_SERVER_URL}/public/views/index.html`);
+ // mainWindow.webContents.openDevTools();
   mainWindow.once('ready-to-show', () => mainWindow.show());
 
   const hideMenuEvents = ['blur', 'focus', 'restore', 'maximize', 'unmaximize', 'resize', 'move', 'show', 'hide'];
@@ -266,10 +294,15 @@ ipcMain.handle('set-widget-visibility', (event, isEnabled) => {
 app.whenReady().then(async () => {
   const { Menu } = require('electron');
   Menu.setApplicationMenu(null);
-  
+  const serverStarted = await startStaticServer();
+  if (!serverStarted) {
+    app.quit();
+    return;
+  }
   await initializeDiscordRPC();
   createWindow();
   const store = new Store();
+  // По умолчанию виджет выключен
   if (store.get('widgetEnabled', false)) {
     createWidget();
   }
@@ -312,6 +345,9 @@ app.on('before-quit', () => {
     const bounds = widgetWindow.getBounds();
     const store = new Store();
     store.set('widgetBounds', bounds);
+  }
+  if (staticServer) {
+    staticServer.close();
   }
   if (discordRPC) discordRPC.disconnect();
 });
