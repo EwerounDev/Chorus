@@ -48,13 +48,11 @@ class DiscordRPCManager {
             this.rpc = new DiscordRPC.Client({ transport: 'ipc' });
             
             this.rpc.on('ready', () => {
-                console.log('Discord RPC connected!');
                 this.isConnected = true;
                 this.setDefaultActivity();
             });
 
             this.rpc.on('disconnected', () => {
-                console.log('Discord RPC disconnected');
                 this.isConnected = false;
                 this.clearProgressInterval();
             });
@@ -191,5 +189,15 @@ class DiscordRPCManager {
         }
     }
 }
+
+process.on('unhandledRejection', (reason, promise) => {
+    if (reason && reason.message && reason.message.includes('Could not connect')) {
+        return;
+    }
+    if (reason && reason.message && reason.message.includes('Request has been terminated')) {
+        return;
+    }
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
 module.exports = DiscordRPCManager;

@@ -1,0 +1,33 @@
+/* --- Плавная анимация строк текста песни --- */
+.lyrics-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.3s;
+  overflow-y: auto;
+  height: 100%;
+}
+.lyric-line {
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+  font-size: 18px;
+  margin: 6px 0;
+  text-align: center;
+  max-width: 90%;
+}
+.lyric-line.active {
+  opacity: 1;
+  font-size: 24px;
+  font-weight: bold;
+  color: #8a2be2;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 4px 16px;
+  transform: scale(1.12);
+  box-shadow: 0 2px 12px 0 rgba(138,43,226,0.08);
+  z-index: 1;
+}
+/* Для плавного появления/исчезновения строк */
+.lyric-line {
+  will-change: opacity, transform;
+} 
