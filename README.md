@@ -28,7 +28,7 @@ Desktop version of Chorus music player with YouTube parser integration, Discord 
 - Configurable buttons and images
 - Automatic status updates
 
-### 🎤 Lyrics Display (working on it, currently unavailable)
+### 🎤 Lyrics Display
 - Synchronized lyrics display
 - Automatic scrolling to current line
 - LRC format support
@@ -110,9 +110,9 @@ Edit `config/discord-config.json`:
 ```
 
 ### Default api urls
-- `ParserURL`: Parser server URL (default: i dont have money to buy a vds,just wait)
-- `ApiURL`: Api server URL (default: i dont have money to buy a vds,just wait)
-- `StaticServerURL`: StaticServer server URL (default: i dont have money to buy a vds,just wait)
+- `ParserURL`: Parser server URL in .env.example
+- `ApiURL`: Api server URL in .env.example
+- `StaticServerURL`: StaticServer server URL in .env.example
 
 ## 🎯 Features
 
@@ -145,7 +145,7 @@ Edit `config/discord-config.json`:
 - Duration and channel type filtering
 - CORS bypass through proxy server (currently disabled cuz dont need:D)
 
-### Lyrics Display (working on it, currently unavailable)
+### Lyrics Display
 - Synchronized display (working on it, currently unavailable)
 - Automatic scrolling (working on it, currently unavailable)
 - LRC format support (working on it, currently unavailable)
